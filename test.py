@@ -5,6 +5,7 @@ class WasRun:
 	def testMethod(self):
 		self.wasRun=True
 
+
 if __name__ == "__main__":
 	test = WasRun("testMethod")
 	print test.wasRun
