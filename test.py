@@ -106,11 +106,5 @@ if __name__ == "__main__":
 	result = TestResult()
 	suite.run(result)
 	print result.summary()
-	
-	result = TestResult()
-	TestCaseTest("testSuite").run(result)
-
-
-
 
 	
