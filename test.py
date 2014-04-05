@@ -7,8 +7,7 @@ class TestCase:
 	def tearDown(self):
 		pass
 
-	def run(self):
-		result = TestResult()
+	def run(self, result):
 		result.testStarted()
 		self.setUp()
 		try:
@@ -51,11 +50,32 @@ class WasRun(TestCase):
 	
 	def testBrokenMethod(sefl):
 		raise Exception
+
+class TestSuite:
+	def __init__(self):
+		self.tests = []
+	def add(self, test):
+		self.tests.append(test)
+	def run(self, result):
+		result = TestResult()
+		for test in self.tests:
+			test.run(result)
+		return result
 	
 class TestCaseTest(TestCase):
+	def testSuite(self):
+		suite = TestSuite()
+		suite.add(WasRun("testMethod"))
+		suite.add(WasRun("testBrokenMethod"))
+		result = TestResult()
+		suite.run(result)
+		print result.summary()
+		assert("2 run, 1 failed" == result.summary())
+
 	def testResult(self):
 		test = WasRun("testMethod")
-		result = test.run()
+		result = TestResult()
+		test.run(result)
 		assert("1 run, 0 failed" == result.summary())
 	
 	def testFailedResultFormatting(self):
@@ -66,17 +86,31 @@ class TestCaseTest(TestCase):
 
 	def testFailedResult(self):
 		test = WasRun("testBrokenMethod")
-		result = test.run()
+		result = TestResult()
+		test.run(result)
 		assert("1 run, 1 failed" == result.summary())
 
 	def testTemplateMethod(self):
 		test = WasRun("testMethod")
-		test.run()
+		result = TestResult()
+		test.run(result)
 		assert("setUp testMethod tearDown" == test.log)
 		
 	
 if __name__ == "__main__":
-	TestCaseTest("testTemplateMethod").run()
-	TestCaseTest("testResult").run()
-	TestCaseTest("testFailedResultFormatting").run()
-	TestCaseTest("testFailedResult").run()
+	suite = TestSuite()
+	suite.add(TestCaseTest("testTemplateMethod"))
+	suite.add(TestCaseTest("testResult"))
+	suite.add(TestCaseTest("testFailedResultFormatting"))
+	suite.add(TestCaseTest("testFailedResult"))
+	result = TestResult()
+	suite.run(result)
+	print result.summary()
+	
+	result = TestResult()
+	TestCaseTest("testSuite").run(result)
+
+
+
+
+	
