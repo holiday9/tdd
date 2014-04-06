@@ -103,6 +103,6 @@ if __name__ == "__main__":
 	suite.run(result)
 
 
-	print result.summary() # 4 run, 0 failed
+	print result.summary() # 4 run, 0 failed 
 
 	
