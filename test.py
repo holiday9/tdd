@@ -101,6 +101,7 @@ if __name__ == "__main__":
 	suite.add(TestCaseTest("testFailedResult"))
 	result = TestResult()
 	suite.run(result)
+
 	print result.summary()
 
 	
