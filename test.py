@@ -102,6 +102,7 @@ if __name__ == "__main__":
 	result = TestResult()
 	suite.run(result)
 
-	print result.summary()
+
+	print result.summary() # 4 run, 0 failed
 
 	
