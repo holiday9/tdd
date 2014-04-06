@@ -74,8 +74,8 @@ class TestCaseTest(TestCase):
 
 	def testResult(self):
 		test = WasRun("testMethod")
-		suite.run(self.result)
-		assert("1 run, 0 failed" == result.summary())
+		test.run(self.result)
+		assert("1 run, 0 failed" == self.result.summary())
 	
 	def testFailedResultFormatting(self):
 		self.result.testStarted()
@@ -90,7 +90,7 @@ class TestCaseTest(TestCase):
 	def testTemplateMethod(self):
 		test = WasRun("testMethod")
 		test.run(self.result)
-		assert("setUp testMethod tearDown" == self.test.log)
+		assert("setUp testMethod tearDown" == test.log)
 		
 	
 if __name__ == "__main__":
